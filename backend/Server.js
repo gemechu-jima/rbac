@@ -3,16 +3,12 @@ import cors from "cors";
 import dotenv from "dotenv";
 import { ROLE_PERMISSIONS } from "./role.js";
 
-
 dotenv.config();
 const app = express();
-
 
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-
 
 app.get("/", (req, res) => {
   res.json({
@@ -23,16 +19,13 @@ app.get("/", (req, res) => {
 
 app.post("/users", async (req, res) => {
   const { name, email, role } = req.body;
-
   const permissions = ROLE_PERMISSIONS[role];
-
   const newUser = {
     name,
     email,
     role,
-    permissions, // ✅ attach permissions here
+    permissions,
   };
-
   res.json(newUser);
 });
 

@@ -4,6 +4,7 @@ import { AuthProvider } from './context/AuthContext';
 import Home from './pages/Home';
 import Navbar from './components/NavBar';
 import Login from './components/Login';
+import Protect from './pages/Protect';
 import AppLayout from './pages/AppLayout';
 import Profile from './pages/Profiles';
 import SuperAdmin from './pages/SuperAdmin';
@@ -17,13 +18,18 @@ function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
-       {location.startsWith('/app') ?'': <Navbar />}
+       {location.startsWith('/app') ? '' : <Navbar />}
         <main className="min-h-screen">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/profile" element={<Profile />} />
-            <Route  path="/app" element={<AppLayout />}>
+            <Route path="/app"
+            element={
+            <Protect>
+              <AppLayout />
+            </Protect>
+          }>
             <Route path="super-admin" element={<SuperAdmin />} />
             <Route path="admin" element={<Admin />} />
             <Route path="manager" element={<Manager />} />
