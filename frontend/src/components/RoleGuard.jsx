@@ -15,12 +15,10 @@ const ROLE_LEVEL = {
 export const RoleGuard = ({ children, allowedRoles }) => {
   const { user } = useAuth();
 
-  // If not logged in → redirect to login (or public home)
   if (!user) {
     return <Navigate to="/login" replace />;
   }
 
-  // Check if user's role is allowed
   const userLevel = ROLE_LEVEL[user.role] || 0;
   const minRequiredLevel = Math.min(...allowedRoles.map(role => ROLE_LEVEL[role] || 0));
    console.log('User Level:', userLevel, 'Required Level:', minRequiredLevel);
