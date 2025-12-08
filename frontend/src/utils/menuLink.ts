@@ -18,11 +18,12 @@ export const menuItems = [
 
 export const sidebarItems = [
   { label: "Dashboard", icon: MdOutlineDashboard, route: "/" },
-  { label: "Users", icon: CiUser, route: "/users" },
   {label:"Super Admin", icon:MdAppRegistration, route:"/super-admin"},
   { label: "Admin", icon: MdOutlineMiscellaneousServices, route: "/admin" },
   { label: "Manager", icon: MdOutlineAnalytics, route: "/manager" },
-  { label: "moderatoer", icon: CiSettings, route: "/moderation" },
+  { label: "Moderatoer", icon: CiSettings, route: "/moderation" },
+  { label: "Users", icon: CiUser, route: "/users" },
+  { label: "Guest", icon: CiUser, route: "/guest" },
 ];
 
 export const services = [

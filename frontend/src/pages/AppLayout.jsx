@@ -24,7 +24,7 @@ export default function AppLayout() {
       </span>
       
       
-      
+      <h1 className="text-3xl text-center py-4">Header of Dashboard</h1>
     
         <hr className="text-slate-600 mb-8" />
           <Outlet />

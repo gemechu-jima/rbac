@@ -28,7 +28,7 @@ function App() {
             <Route path="admin" element={<Admin />} />
             <Route path="manager" element={<Manager />} />
             <Route path="moderation" element={<Moderation />} />
-            <Route path="user" element={<User />} />
+            <Route path="users" element={<User />} />
             <Route path="guest" element={<Guest />} />
           </Route>
           </Routes>

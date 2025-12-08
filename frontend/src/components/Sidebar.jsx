@@ -13,7 +13,7 @@ import { useAuth } from "../context/AuthContext";
 export default function Sidebar({ isSidebarOpen }) {
   const { logout, user } = useAuth();
   const location=useLocation()
-  const adminOnlyRoutes = ["/users", "/service-register"];
+  const adminOnlyRoutes = ["/service-register"];
   const filteredSidebarItems =
   user?.role === "admin"
     ? sidebarItems

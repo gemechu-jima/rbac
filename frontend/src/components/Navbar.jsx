@@ -17,19 +17,19 @@ export default function Navbar() {
     navItems.push({ label: 'Profile', path: '/profile' });
     
     if (['moderator', 'admin', 'super_admin'].includes(user.role)) {
-      navItems.push({ label: 'Moderation', path: '/moderation' });
+      navItems.push({ label: 'Moderation', path: '/app/moderation' });
     }
 
     if (['manager', 'admin', 'super_admin'].includes(user.role)) {
-      navItems.push({ label: 'Team', path: '/team' });
+      navItems.push({ label: 'Team', path: '/app/manager' });
     }
 
     if (['admin', 'super_admin'].includes(user.role)) {
-      navItems.push({ label: 'Admin', path: '/admin' });
+      navItems.push({ label: 'Admin', path: '/app/admin' });
     }
 
     if (user.role === 'super_admin') {
-      navItems.push({ label: 'System', path: '/system' });
+      navItems.push({ label: 'System', path: '/app/super-admin' });
     }
   }
 

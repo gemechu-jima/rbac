@@ -25,7 +25,20 @@ export default function UserForm({ initialData = null, onSubmit, onCancel }) {
   });
 
   const handleFormSubmit = async (data) => {
+
     await onSubmit(data);
+   
+    const response=await fetch(`${import.meta.env.VITE_API_URL}/users`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+    const result=await response.json();
+    console.log('Created User:', result);
+       
+
     if (!initialData) {
       // Reset form only on create (not edit)
       reset({ name: '', email: '', role: 'user' });
