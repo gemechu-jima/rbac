@@ -14,35 +14,29 @@ export default function Login() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Get redirect path after login (e.g., /admin)
-  const from = location.state?.from?.pathname || '/';
+  const from = location.state?.from?.pathname || '/app/profile';
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     setLoading(true);
-
-    // ✅ Replace this with real API call
     try {
-      // Mock login: accept any non-empty email/password
       if (!email || !password) {
         throw new Error('Email and password are required');
       }
-
-      // Simulate API delay
       await new Promise((resolve) => setTimeout(resolve, 800));
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
 
-      // 👇 MOCK USER DATA — replace with real response
-      const mockUser = {
-        id: '1',
-        name: email.split('@')[0],
-        email,
-        role: email.includes('admin') ? 'admin' : 
-              email.includes('mod') ? 'moderator' :
-              email.includes('mgr') ? 'manager' : 'user',
-      };
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.message || 'Login failed');
+      }
 
-      login(mockUser); // sets user in context
+      login(data); 
       navigate(from, { replace: true });
     } catch (err) {
       setError(err.message || 'Login failed. Please try again.');

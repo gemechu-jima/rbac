@@ -1,14 +1,15 @@
 // src/components/UserForm.jsx
 import { useForm } from 'react-hook-form';
+import {ROLES} from "../../../shares/role"
 
-const ROLES = [
-  { value: 'guest', label: 'Guest (View only)' },
-  { value: 'user', label: 'User (Standard)' },
-  { value: 'moderator', label: 'Moderator (Content)' },
-  { value: 'manager', label: 'Manager (Team)' },
-  { value: 'admin', label: 'Admin (Full access)' },
-  { value: 'super_admin', label: 'Super Admin (System owner)' },
-];
+// const ROLES = [
+//   { value: 'guest', label: 'Guest (View only)' },
+//   { value: 'user', label: 'User (Standard)' },
+//   { value: 'moderator', label: 'Moderator (Content)' },
+//   { value: 'manager', label: 'Manager (Team)' },
+//   { value: 'admin', label: 'Admin (Full access)' },
+//   { value: 'super_admin', label: 'Super Admin (System owner)' },
+// ];
 
 export default function UserForm({ initialData = null, onSubmit, onCancel }) {
   const {
@@ -28,7 +29,7 @@ export default function UserForm({ initialData = null, onSubmit, onCancel }) {
 
     await onSubmit(data);
    
-    const response=await fetch(`${import.meta.env.VITE_API_URL}/users`, {
+    const response=await fetch(`${import.meta.env.VITE_API_URL}/api/users`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -38,7 +39,6 @@ export default function UserForm({ initialData = null, onSubmit, onCancel }) {
     const result=await response.json();
     console.log('Created User:', result);
        
-
     if (!initialData) {
       // Reset form only on create (not edit)
       reset({ name: '', email: '', role: 'user' });
