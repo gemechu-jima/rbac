@@ -7,16 +7,17 @@ export const RoleGuard = ({ children, allowedRoles }) => {
   const { user } = useAuth();
 
   if (!user) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/login"  />;
   }
 
   const userLevel = ROLES_CONFIG[user.role].level || 0;
-  const minRequiredLevel = Math.min(
+  const minRequiredLevel = Math.max(
     ...allowedRoles.map((role) => ROLES_CONFIG[role] || 0)
   );
   console.log("User Level:", userLevel, "Required Level:", minRequiredLevel);
+
   if (userLevel < minRequiredLevel) {
-    return <Navigate to="/unauthorized" replace />;
+    return <Navigate to="/unauthorized"/>;
   }
 
   return children;

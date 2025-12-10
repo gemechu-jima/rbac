@@ -18,7 +18,7 @@ function App() {
   const location = useLocation();
   return (
     <>
-      {!location.pathname.startsWith("/app") && <Navbar />}
+      {!location.pathname.startsWith('/app') ? <Navbar /> : null}
       <main className="min-h-screen">
         <Routes>
           <Route path="/" element={<Home />} />

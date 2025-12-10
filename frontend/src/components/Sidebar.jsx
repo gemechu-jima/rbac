@@ -12,7 +12,6 @@ import {
   FaSignOutAlt,
   FaHome,
 } from "react-icons/fa";
-console.log("ROLES_CONFIG in Sidebar:", ROLES_CONFIG.super_admin.role[0]);
 export default function Sidebar({ isSidebarOpen }) {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
@@ -55,7 +54,7 @@ export default function Sidebar({ isSidebarOpen }) {
       });
     }
 
-    if (user.role === ROLES_CONFIG.super_admin.role) {
+    if (user.role === ROLES_CONFIG.super_admin.role[0]) {
       navItems.push({
         label: "System",
         path: "/app/super-admin",

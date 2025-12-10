@@ -4,13 +4,13 @@ export const ROLES_CONFIG = {
   guest: {
     label: "Guest",
     permissions: ["read:public"],
-    role:["guest","user","moderator","manager","admin","super_admin"],
+    role:["guest","user","manager","admin","super_admin"],
     level:0
   },
   user: {
     label: "User",
     permissions: ["read:own", "write:own", "read:public"],
-    role:["user","moderator","manager","admin","super_admin"],
+    role:["user","manager","admin","super_admin"],
     level:1
   },
   manager: {

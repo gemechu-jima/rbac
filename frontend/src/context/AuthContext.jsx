@@ -15,6 +15,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState();
   const [token, setToken] = useState();
   const [tokenExpiredTime, setTokenExpiredTime] = useState();
+  const [loading, setLoading]=useState(true);
   const logoutTimerRef = useRef(null);
   const navigate = useNavigate();
 
@@ -46,27 +47,36 @@ export const AuthProvider = ({ children }) => {
     navigate("/");
   }, [navigate]);
 useEffect(() => {
-    const userData = localStorage.getItem("userData");
-    if (!userData) return;
-
+    const restore = () => {
     try {
-      const parsed = JSON.parse(userData);
-      const { user, token, expiration } = parsed;
-
-      const expirationDate = new Date(expiration);
-
-      if (expirationDate > new Date()) {
-        Promise.resolve().then(() => {
-          setUser(user);
-          setToken(token);
-          setTokenExpiredTime(expirationDate);
-        });
-      } else {
-        localStorage.removeItem("userData");
+      const stored = localStorage.getItem("userData");
+      if (!stored) {
+        setLoading(false);
+        return;
       }
-    } catch {
+
+      const parsed = JSON.parse(stored);
+      const expirationDate = new Date(parsed.expiration);
+
+      if (expirationDate <= new Date()) {
+        localStorage.removeItem("userData");
+        setLoading(false);
+        return;
+      }
+
+      // use ONE state update batch
+      setUser(parsed.user);
+      setToken(parsed.token);
+      setTokenExpiredTime(expirationDate);
+    } catch (err) {
       localStorage.removeItem("userData");
+      console.error("Failed to restore auth state:", err);
     }
+
+    setLoading(false);
+  };
+
+  restore();
   }, []);
 
   useEffect(() => {
@@ -86,7 +96,7 @@ useEffect(() => {
     };
   }, [token, tokenExpiredTime, logout]);
   return (
-    <AuthContext.Provider value={{ user, token, login, logout }}>
+    <AuthContext.Provider value={{ user, token, loading, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
