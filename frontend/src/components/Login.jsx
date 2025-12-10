@@ -1,7 +1,7 @@
 // src/pages/Login.jsx
 import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -12,9 +12,7 @@ export default function Login() {
 
   const { login } = useAuth();
   const navigate = useNavigate();
-  const location = useLocation();
 
-  const from = location.state?.from?.pathname || '/app/profile';
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -37,7 +35,7 @@ export default function Login() {
       }
 
       login(data); 
-      navigate(from, { replace: true });
+      navigate('/app');
     } catch (err) {
       setError(err.message || 'Login failed. Please try again.');
     } finally {
@@ -52,12 +50,6 @@ export default function Login() {
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
             Sign in to your account
           </h2>
-          <p className="mt-2 text-center text-sm text-gray-600">
-            Or{' '}
-            <a href="#" className="font-medium text-blue-600 hover:text-blue-500">
-              create a new account
-            </a>
-          </p>
         </div>
 
         {error && (
@@ -71,8 +63,8 @@ export default function Login() {
         )}
 
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-          <div className="rounded-md shadow-sm -space-y-px">
-            <div>
+          <div className="">
+            <div className='py-3 rounded-2xl p-2'>
               <label htmlFor="email-address" className="sr-only">
                 Email address
               </label>
@@ -88,7 +80,7 @@ export default function Login() {
                 placeholder="Email address"
               />
             </div>
-            <div>
+            <div className='py-3 rounded-2xl p-2'>
               <label htmlFor="password" className="sr-only">
                 Password
               </label>

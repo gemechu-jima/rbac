@@ -11,9 +11,9 @@ import Admin from "./pages/Admin";
 import Manager from "./pages/Manager";
 import User from "./pages/User";
 import Guest from "./pages/Guest";
+import Unauthorized from "./components/Unauthorized";
 import { RoleGuard } from "./components/RoleGuard";
 import {ROLES_CONFIG} from "../../shares/role";
-console.log(ROLES_CONFIG);
 function App() {
   const location = useLocation();
   return (
@@ -23,6 +23,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/unauthorized" element={<Unauthorized />} />
           <Route
             path="/app"
             element={

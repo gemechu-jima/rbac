@@ -1,7 +1,7 @@
 // src/components/Sidebar.jsx
 import { useAuth } from "../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
-
+import { ROLES_CONFIG } from "../../../shares/role";
 // Icons
 import {
   FaUser,
@@ -12,7 +12,7 @@ import {
   FaSignOutAlt,
   FaHome,
 } from "react-icons/fa";
-
+console.log("ROLES_CONFIG in Sidebar:", ROLES_CONFIG.super_admin.role[0]);
 export default function Sidebar({ isSidebarOpen }) {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
@@ -31,7 +31,7 @@ export default function Sidebar({ isSidebarOpen }) {
       path: "/app/profile",
       icon: <FaUser className="text-lg" />,
     });
-    if (["user", "moderator", "admin", "super_admin"].includes(user.role)) {
+    if (ROLES_CONFIG.user.role.includes(user.role)) {
       navItems.push({
         label: "Users",
         path: "/app/users",
@@ -39,7 +39,7 @@ export default function Sidebar({ isSidebarOpen }) {
       });
     }
 
-    if (["manager", "admin", "super_admin"].includes(user.role)) {
+    if (ROLES_CONFIG.manager.role.includes(user.role)) {
       navItems.push({
         label: "Team Manager",
         path: "/app/manager",
@@ -47,7 +47,7 @@ export default function Sidebar({ isSidebarOpen }) {
       });
     }
 
-    if (["admin", "super_admin"].includes(user.role)) {
+    if (ROLES_CONFIG.admin.role.includes(user.role)) {
       navItems.push({
         label: "Admin",
         path: "/app/admin",
@@ -55,7 +55,7 @@ export default function Sidebar({ isSidebarOpen }) {
       });
     }
 
-    if (user.role === "super_admin") {
+    if (user.role === ROLES_CONFIG.super_admin.role) {
       navItems.push({
         label: "System",
         path: "/app/super-admin",
@@ -69,13 +69,12 @@ export default function Sidebar({ isSidebarOpen }) {
       className={`dark:bg-gray-950 bg-gray-800 text-white h-screen flex flex-col shadow-lg transition-all duration-300 
       ${isSidebarOpen ? "w-64" : "w-[72px]"}`}
     >
-      {/* Logo */}
       <div className="p-4 flex items-center gap-3 border-b border-gray-700">
         <FaHome className="text-2xl" />
         {isSidebarOpen && <span className="text-xl font-bold">MyApp</span>}
       </div>
 
-      {/* User Info */}
+     
       {user && (
         <div className="p-4 border-b border-gray-700">
           {isSidebarOpen ? (
@@ -91,7 +90,6 @@ export default function Sidebar({ isSidebarOpen }) {
         </div>
       )}
 
-      {/* Navigation */}
       <nav className="flex-1 p-3 space-y-2">
         {navItems.map((item) => (
           <Link

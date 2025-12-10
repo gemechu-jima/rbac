@@ -1,4 +1,3 @@
-// src/pages/ContentModeration.jsx
 
 
 export default function Manager() {

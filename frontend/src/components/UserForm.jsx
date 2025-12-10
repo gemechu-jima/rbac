@@ -1,7 +1,7 @@
 // src/components/UserForm.jsx
 import { useForm } from 'react-hook-form';
 import {ROLES} from "../../../shares/role"
-
+import {TextInput, SelectInput, Checkbox } from "./custom/CustomInput.jsx";
 // const ROLES = [
 //   { value: 'guest', label: 'Guest (View only)' },
 //   { value: 'user', label: 'User (Standard)' },
@@ -11,7 +11,7 @@ import {ROLES} from "../../../shares/role"
 //   { value: 'super_admin', label: 'Super Admin (System owner)' },
 // ];
 
-export default function UserForm({ initialData = null, onSubmit, onCancel }) {
+export default function UserForm({ initialData = null,}) {
   const {
     register,
     handleSubmit,
@@ -21,14 +21,11 @@ export default function UserForm({ initialData = null, onSubmit, onCancel }) {
     defaultValues: initialData || {
       name: '',
       email: '',
-      role: 'user', // default role
+      role: 'user', 
     },
   });
 
   const handleFormSubmit = async (data) => {
-
-    await onSubmit(data);
-   
     const response=await fetch(`${import.meta.env.VITE_API_URL}/api/users`, {
       method: 'POST',
       headers: {
@@ -37,10 +34,8 @@ export default function UserForm({ initialData = null, onSubmit, onCancel }) {
       body: JSON.stringify(data),
     })
     const result=await response.json();
-    console.log('Created User:', result);
-       
+    console.log('User created:', result);
     if (!initialData) {
-      // Reset form only on create (not edit)
       reset({ name: '', email: '', role: 'user' });
     }
   };
@@ -52,7 +47,6 @@ export default function UserForm({ initialData = null, onSubmit, onCancel }) {
       </h2>
 
       <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-4">
-        {/* Name */}
         <div>
           <label htmlFor="name" className="block text-sm font-medium text-gray-700">
             Full Name *
@@ -65,8 +59,6 @@ export default function UserForm({ initialData = null, onSubmit, onCancel }) {
           />
           {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>}
         </div>
-
-        {/* Email */}
         <div>
           <label htmlFor="email" className="block text-sm font-medium text-gray-700">
             Email *
@@ -86,7 +78,6 @@ export default function UserForm({ initialData = null, onSubmit, onCancel }) {
           {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
         </div>
 
-        {/* Role */}
         <div>
           <label htmlFor="role" className="block text-sm font-medium text-gray-700">
             Role *
@@ -94,7 +85,7 @@ export default function UserForm({ initialData = null, onSubmit, onCancel }) {
           <select
             id="role"
             {...register('role', { required: 'Role is required' })}
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+            className="mt-1 block w-full px-3 py-2 border  rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
           >
             {ROLES.map((role) => (
               <option key={role.value} value={role.value}>
@@ -114,15 +105,15 @@ export default function UserForm({ initialData = null, onSubmit, onCancel }) {
           >
             {isSubmitting ? 'Saving...' : initialData ? 'Update User' : 'Create User'}
           </button>
-          {onCancel && (
+    
             <button
               type="button"
-              onClick={onCancel}
+              onClick={() => reset()}
               className="flex-1 bg-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-400"
             >
               Cancel
             </button>
-          )}
+      
         </div>
       </form>
     </div>

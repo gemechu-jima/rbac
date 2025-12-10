@@ -31,14 +31,6 @@ export default function Navbar() {
         icon: <FaUser className="text-lg" />,
       });
     }
-    if (['moderator', 'admin', 'super_admin'].includes(user.role)) {
-      navItems.push({
-        label: 'Moderation',
-        path: '/app/moderation',
-        icon: <FaShieldAlt className="inline-block mr-1" />
-      });
-    }
-
     if (['manager', 'admin', 'super_admin'].includes(user.role)) {
       navItems.push({
         label: 'Team',
