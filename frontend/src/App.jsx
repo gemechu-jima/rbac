@@ -13,12 +13,12 @@ import User from "./pages/User";
 import Guest from "./pages/Guest";
 import Unauthorized from "./components/Unauthorized";
 import { RoleGuard } from "./components/RoleGuard";
-import {ROLES_CONFIG} from "../../shares/role";
+import { ROLES_CONFIG } from "../../shares/role";
 function App() {
   const location = useLocation();
   return (
     <>
-      {!location.pathname.startsWith('/app') ? <Navbar /> : null}
+      {!location.pathname.startsWith("/app") ? <Navbar /> : null}
       <main className="min-h-screen">
         <Routes>
           <Route path="/" element={<Home />} />
@@ -60,9 +60,7 @@ function App() {
             <Route
               path="users"
               element={
-                <RoleGuard
-                  allowedRoles={ROLES_CONFIG.user.role}
-                >
+                <RoleGuard allowedRoles={ROLES_CONFIG.user.role}>
                   <User />
                 </RoleGuard>
               }

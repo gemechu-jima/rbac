@@ -35,6 +35,7 @@ export default function Login() {
       }
 
       login(data); 
+      console.log('Login successful:', data);
       navigate('/app');
     } catch (err) {
       setError(err.message || 'Login failed. Please try again.');
