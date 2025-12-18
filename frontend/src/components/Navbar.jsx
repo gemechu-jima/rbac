@@ -1,17 +1,15 @@
 // src/components/Navbar.jsx
 import { useAuth } from '../context/AuthContext';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 // Icons
 import { FaUser, FaUsers, FaTools, FaShieldAlt, FaCogs, FaSignOutAlt, FaHome } from 'react-icons/fa';
 
 export default function Navbar() {
-  const { user, logout } = useAuth();
-  const navigate = useNavigate();
+  const { user, logout, setIsLogin } = useAuth();
 
   const handleLogout = () => {
     logout();
-    navigate('/login');
   };
 
   // Role-based nav items with icons
@@ -57,49 +55,48 @@ export default function Navbar() {
   }
 
   return (
-    <nav className="bg-blue-600 text-white p-4 shadow">
-      <div className="container mx-auto flex justify-between items-center">
+    <nav className="bg-blue-600  p-4 shadow">
+  <div className="max-w-7xl mx-auto flex justify-between items-center">
 
-        {/* Logo */}
-        <Link to="/" className="font-bold text-xl flex items-center gap-2">
-          <FaHome />
-          MyApp
-        </Link>
+    <Link to="/" className="font-bold text-xl flex items-center gap-2 text-white">
+      <FaHome />
+      MyApp
+    </Link>
+    {user ? (
+      <div className="flex items-center gap-6">
 
-        {/* Right side */}
-        {user ? (
-          <div className="flex items-center gap-6">
+        <span className="text-sm">
+          Hi, {user.name} ({user.role})
+        </span>
 
-            {/* User info */}
-            <span className="text-sm">
-              Hi, {user.name} ({user.role})
-            </span>
+        {navItems.map(item => (
+          <Link
+            key={item.path}
+            to={item.path}
+            className="hover:underline flex items-center gap-1"
+          >
+            {item.icon}
+            {item.label}
+          </Link>
+        ))}
 
-            {/* Dynamic nav items */}
-            {navItems.map(item => (
-              <Link
-                key={item.path}
-                to={item.path}
-                className="hover:underline flex items-center"
-              >
-                {item.icon}
-                {item.label}
-              </Link>
-            ))}
-
-            {/* Logout */}
-            <button
-              onClick={handleLogout}
-              className="flex items-center text-red-200 hover:text-white"
-            >
-              <FaSignOutAlt className="mr-1" />
-              Logout
-            </button>
-          </div>
-        ) : (
-          <Link to="/login" className="hover:underline">Login</Link>
-        )}
+        <button
+          onClick={handleLogout}
+          className="flex items-center text-red-400 hover:text-white "
+        >
+          <FaSignOutAlt className="mr-1" />
+          Logout
+        </button>
       </div>
-    </nav>
+    ) : (
+      <button
+        onClick={() => setIsLogin(prev => !prev)}
+        className="rounded-md px-3 py-2 "
+      >
+        Login
+      </button>
+    )}
+  </div>
+</nav>
   );
 }
