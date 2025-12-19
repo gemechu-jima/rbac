@@ -2,7 +2,6 @@
 import { Routes, Route, useLocation } from "react-router-dom";
 import Home from "./pages/Home";
 import Navbar from "./components/NavBar";
-import Login from "./components/Login";
 import Protect from "./pages/Protect";
 import AppLayout from "./pages/AppLayout";
 import Profile from "./pages/Profiles";
@@ -22,7 +21,6 @@ function App() {
       <main className="min-h-screen">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
           <Route path="/unauthorized" element={<Unauthorized />} />
           <Route
             path="/app"

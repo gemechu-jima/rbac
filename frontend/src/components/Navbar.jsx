@@ -55,10 +55,10 @@ export default function Navbar() {
   }
 
   return (
-    <nav className="bg-blue-600  p-4 shadow">
+    <nav className="bg-blue-600 text-white p-4 shadow">
   <div className="max-w-7xl mx-auto flex justify-between items-center">
 
-    <Link to="/" className="font-bold text-xl flex items-center gap-2 text-white">
+    <Link to="/" className="font-bold text-xl flex items-center gap-2 ">
       <FaHome />
       MyApp
     </Link>
